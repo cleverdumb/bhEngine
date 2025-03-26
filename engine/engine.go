@@ -8,7 +8,7 @@ import (
 
 type Game struct {
 	Pl     Player
-	Config map[ConfigureType]ConfigureVal
+	Config map[ConfigureType]interface{}
 }
 
 type Player struct {
@@ -63,11 +63,13 @@ out:
 	}
 }
 
-const spd = 7
-const followEpsilon = 10
+// const spd = 7
+// const followEpsilon = 10
 
 func inputProcess(e *Game) {
-	if e.Config[InputMode] == WASD {
+	spd := e.Config[PlayerSpd].(float32)
+	switch e.Config[InputMode].(ConfigureVal) {
+	case WASD:
 		if keyDown[glfw.KeyW] {
 			if keyDown[glfw.KeyA] || keyDown[glfw.KeyD] {
 				e.Pl.Y -= spd / math.Sqrt2
@@ -96,23 +98,29 @@ func inputProcess(e *Game) {
 				e.Pl.X += spd
 			}
 		}
-	} else if e.Config[InputMode] == FOLLOWMOUSE {
+	case FollowMouse:
 		dy := mousePos[1] - e.Pl.Y
 		dx := mousePos[0] - e.Pl.X
 
 		l := math.Hypot(float64(dx), float64(dy))
 
-		if l > followEpsilon {
+		if l < float64(spd) {
+			e.Pl.X = mousePos[0]
+			e.Pl.Y = mousePos[1]
+		} else {
 			dy /= float32(l)
 			dx /= float32(l)
 
 			e.Pl.X += dx * spd
 			e.Pl.Y += dy * spd
 		}
+	case Snap:
+		e.Pl.X = mousePos[0]
+		e.Pl.Y = mousePos[1]
 	}
 }
 
-func (e *Game) Configure(t ConfigureType, v ConfigureVal) {
+func (e *Game) Configure(t ConfigureType, v interface{}) {
 	// switch t {
 	// case InputMode:
 	// 	var inputFunc glfw.CharCallback

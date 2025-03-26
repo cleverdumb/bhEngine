@@ -1,8 +1,9 @@
 package engine
 
-func getDefaultGameConfig() map[ConfigureType]ConfigureVal {
-	return map[ConfigureType]ConfigureVal{
-		InputMode: FOLLOWMOUSE,
+func getDefaultGameConfig() map[ConfigureType]interface{} {
+	return map[ConfigureType]interface{}{
+		InputMode: FollowMouse,
+		PlayerSpd: float32(7),
 	}
 }
 
@@ -11,6 +12,7 @@ type ConfigureType int
 const (
 	_ ConfigureType = iota
 	InputMode
+	PlayerSpd
 )
 
 type ConfigureVal int
@@ -18,5 +20,6 @@ type ConfigureVal int
 const (
 	_ ConfigureVal = iota
 	WASD
-	FOLLOWMOUSE
+	FollowMouse
+	Snap
 )

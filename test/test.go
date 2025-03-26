@@ -10,7 +10,8 @@ func main() {
 	fmt.Println("Hello world")
 	e := engine.InitEngine()
 
-	e.Configure(engine.InputMode, engine.FOLLOWMOUSE)
+	e.Configure(engine.InputMode, engine.Snap)
+	e.Configure(engine.PlayerSpd, float32(7))
 
 	endChan := make(chan int)
 	e.BeginGameLoop(endChan)
