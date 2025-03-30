@@ -7,13 +7,20 @@ import (
 )
 
 type Game struct {
-	Pl     Player
-	Config map[ConfigureType]interface{}
+	Pl       Player
+	Config   map[ConfigureType]interface{}
+	Entities []Entity
 }
 
 type Player struct {
 	X float32
 	Y float32
+}
+
+type Entity struct {
+	X     float32
+	Y     float32
+	Shape Shape
 }
 
 // var pl Player
@@ -30,6 +37,7 @@ func InitEngine() Game {
 
 	g := Game{}
 	g.Config = getDefaultGameConfig()
+	g.Entities = make([]Entity, 0)
 	pl := Player{400, 400}
 	g.Pl = pl
 
@@ -132,4 +140,8 @@ func (e *Game) Configure(t ConfigureType, v interface{}) {
 	// 	window.SetCharCallback(inputFunc)
 	// }
 	e.Config[t] = v
+}
+
+func (g *Game) Spawn(e Entity) {
+	g.Entities = append(g.Entities, e)
 }

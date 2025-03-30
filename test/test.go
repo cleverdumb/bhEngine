@@ -3,15 +3,17 @@ package main
 import (
 	"fmt"
 
-	"example.com/engine"
+	E "example.com/engine"
 )
 
 func main() {
 	fmt.Println("Hello world")
-	e := engine.InitEngine()
+	e := E.InitEngine()
 
-	e.Configure(engine.InputMode, engine.Snap)
-	e.Configure(engine.PlayerSpd, float32(7))
+	e.Configure(E.InputMode, E.Snap)
+	e.Configure(E.PlayerSpd, float32(7))
+
+	e.Spawn(E.Entity{100, 100, E.Circle})
 
 	endChan := make(chan int)
 	e.BeginGameLoop(endChan)

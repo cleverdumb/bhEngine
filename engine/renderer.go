@@ -15,6 +15,10 @@ const (
 
 var window *glfw.Window
 
+func toScr(x, y float32) (float32, float32) {
+	return (x/windowWidth)*2 - 1, (windowHeight-y)/windowHeight*2 - 1
+}
+
 // var game *Game
 
 // func drawCircle(x, y, radius float32, segments int) {
@@ -80,9 +84,23 @@ func InitRender() {
 func RenderFrame(g *Game) {
 	gl.Clear(gl.COLOR_BUFFER_BIT)
 	gl.Color3f(1.0, 0.0, 0.0)
-	fillCircle((g.Pl.X/windowWidth)*2-1, (windowHeight-g.Pl.Y)/windowHeight*2-1, 0.02, 100)
+	px, py := toScr(g.Pl.X, g.Pl.Y)
+	fillCircle(px, py, 0.02, 100)
+
+	for _, e := range g.Entities {
+		renderEntity(&e)
+	}
 	// fmt.Println(g.Pl)
 
 	window.SwapBuffers()
 	glfw.PollEvents()
+}
+
+func renderEntity(e *Entity) {
+	switch e.Shape {
+	case Circle:
+		gl.Color3f(0.0, 0.0, 1.0)
+		ex, ey := toScr(e.X, e.Y)
+		fillCircle(ex, ey, 0.02, 100)
+	}
 }

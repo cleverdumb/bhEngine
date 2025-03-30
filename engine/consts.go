@@ -23,3 +23,10 @@ const (
 	FollowMouse
 	Snap
 )
+
+type Shape int
+
+const (
+	_ Shape = iota
+	Circle
+)
