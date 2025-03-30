@@ -21,6 +21,7 @@ type Entity struct {
 	X     float32
 	Y     float32
 	Shape Shape
+	D     PropMap
 }
 
 // var pl Player
@@ -75,7 +76,7 @@ out:
 // const followEpsilon = 10
 
 func inputProcess(e *Game) {
-	spd := e.Config[PlayerSpd].(float32)
+	spd := num(e.Config[PlayerSpd])
 	switch e.Config[InputMode].(ConfigureVal) {
 	case WASD:
 		if keyDown[glfw.KeyW] {

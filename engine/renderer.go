@@ -101,6 +101,6 @@ func renderEntity(e *Entity) {
 	case Circle:
 		gl.Color3f(0.0, 0.0, 1.0)
 		ex, ey := toScr(e.X, e.Y)
-		fillCircle(ex, ey, 0.02, 100)
+		fillCircle(ex, ey, 2*(num(e.D[R]))/windowWidth, 100)
 	}
 }

@@ -30,3 +30,10 @@ const (
 	_ Shape = iota
 	Circle
 )
+
+type EntityProp int
+
+const (
+	_ EntityProp = iota
+	R
+)
