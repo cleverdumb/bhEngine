@@ -2,23 +2,27 @@ package engine
 
 func getDefaultGameConfig() map[ConfigureType]interface{} {
 	return map[ConfigureType]interface{}{
-		InputMode: FollowMouse,
-		PlayerSpd: float32(7),
+		InputMode:   FollowMouse,
+		PlayerSpd:   7,
+		ScreenBound: BoundX | BoundY,
 	}
 }
 
 type ConfigureType int
 
 const (
-	_ ConfigureType = iota
-	InputMode
-	PlayerSpd
+	_           ConfigureType = iota
+	InputMode                 // FollowMouse
+	PlayerSpd                 // 7
+	ScreenBound               // BoundX | BoundY
 )
 
 type ConfigureVal int
 
 const (
-	_ ConfigureVal = iota
+	_      ConfigureVal = iota
+	BoundX              // fixed
+	BoundY              // fixed
 	WASD
 	FollowMouse
 	Snap

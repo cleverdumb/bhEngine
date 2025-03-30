@@ -15,6 +15,7 @@ type Game struct {
 type Player struct {
 	X float32
 	Y float32
+	R float32
 }
 
 type Entity struct {
@@ -39,7 +40,7 @@ func InitEngine() Game {
 	g := Game{}
 	g.Config = getDefaultGameConfig()
 	g.Entities = make([]Entity, 0)
-	pl := Player{400, 400}
+	pl := Player{400, 400, 10}
 	g.Pl = pl
 
 	window.SetKeyCallback(func(w *glfw.Window, key glfw.Key, scancode int, action glfw.Action, mods glfw.ModifierKey) {
@@ -126,6 +127,15 @@ func inputProcess(e *Game) {
 	case Snap:
 		e.Pl.X = mousePos[0]
 		e.Pl.Y = mousePos[1]
+	}
+	if e.Config[ScreenBound].(ConfigureVal)&BoundX > 0 {
+		e.Pl.X = max(e.Pl.X, e.Pl.R)
+		e.Pl.X = min(windowWidth-e.Pl.R, e.Pl.X)
+	}
+
+	if e.Config[ScreenBound].(ConfigureVal)&BoundY > 0 {
+		e.Pl.Y = max(e.Pl.Y, e.Pl.R)
+		e.Pl.Y = min(windowWidth-e.Pl.R, e.Pl.Y)
 	}
 }
 

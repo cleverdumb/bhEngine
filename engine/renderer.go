@@ -81,15 +81,20 @@ func InitRender() {
 	// }
 }
 
-func RenderFrame(g *Game) {
-	gl.Clear(gl.COLOR_BUFFER_BIT)
+func renderPlayer(g *Game) {
 	gl.Color3f(1.0, 0.0, 0.0)
 	px, py := toScr(g.Pl.X, g.Pl.Y)
 	fillCircle(px, py, 0.02, 100)
+}
+
+func RenderFrame(g *Game) {
+	gl.Clear(gl.COLOR_BUFFER_BIT)
 
 	for _, e := range g.Entities {
 		renderEntity(&e)
 	}
+
+	renderPlayer(g)
 	// fmt.Println(g.Pl)
 
 	window.SwapBuffers()

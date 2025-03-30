@@ -11,10 +11,11 @@ func main() {
 	e := E.InitEngine()
 
 	e.Configure(E.InputMode, E.Snap)
-	e.Configure(E.PlayerSpd, float32(7))
+	e.Configure(E.PlayerSpd, 10)
+	e.Configure(E.ScreenBound, E.BoundX|E.BoundY)
 
-	e.Spawn(E.Entity{X: 100, Y: 100, Shape: E.Circle, D: map[E.EntityProp]interface{}{E.R: float32(100)}})
-	e.Spawn(E.Entity{X: 200, Y: 300, Shape: E.Circle, D: map[E.EntityProp]interface{}{E.R: float32(20)}})
+	e.Spawn(E.Entity{X: 100, Y: 100, Shape: E.Circle, D: E.PropMap{E.R: float32(100)}})
+	e.Spawn(E.Entity{X: 200, Y: 300, Shape: E.Circle, D: E.PropMap{E.R: float32(20)}})
 
 	endChan := make(chan int)
 	e.BeginGameLoop(endChan)
