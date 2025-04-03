@@ -1,6 +1,9 @@
 package engine
 
+import "math"
+
 type PropMap map[EntityProp]interface{}
+type CBMap map[EntityCB]interface{}
 
 func num(i interface{}) float32 {
 	switch t := i.(type) {
@@ -13,15 +16,8 @@ func num(i interface{}) float32 {
 	default:
 		return 0
 	}
+}
 
-	// switch i.(type) {
-	// case int:
-	// 	return float32(i.(int))
-	// case float32:
-	// 	return i.(float32)
-	// case float64:
-	// 	return float32(i.(float64))
-	// default:
-	// 	return 0
-	// }
+func dist(x1, y1, x2, y2 float32) float32 {
+	return float32(math.Hypot(float64(x2-x1), float64(y2-y1)))
 }

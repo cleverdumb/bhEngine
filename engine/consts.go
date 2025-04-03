@@ -41,3 +41,10 @@ const (
 	_ EntityProp = iota
 	R
 )
+
+type EntityCB int
+
+const (
+	_ EntityCB = iota
+	CollidePL
+)

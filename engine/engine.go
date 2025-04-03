@@ -18,13 +18,6 @@ type Player struct {
 	R float32
 }
 
-type Entity struct {
-	X     float32
-	Y     float32
-	Shape Shape
-	D     PropMap
-}
-
 // var pl Player
 var keyDown = make(map[glfw.Key]bool)
 var mousePos = [2]float32{0, 0}
@@ -68,6 +61,9 @@ out:
 			inputProcess(e)
 			RenderFrame(e)
 
+			for _, entity := range e.Entities {
+				entity.CheckCB(e)
+			}
 			// time.Sleep(1 * time.Second)
 		}
 	}
@@ -155,4 +151,14 @@ func (e *Game) Configure(t ConfigureType, v interface{}) {
 
 func (g *Game) Spawn(e Entity) {
 	g.Entities = append(g.Entities, e)
+}
+
+func (g *Game) NewEntity(x, y float32, shape Shape, data PropMap) Entity {
+	return Entity{
+		X:     x,
+		Y:     y,
+		Shape: shape,
+		D:     data,
+		CB:    make(CBMap),
+	}
 }
